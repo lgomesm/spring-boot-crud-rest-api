@@ -16,8 +16,7 @@ public class BookController {
 
     @GetMapping("/books")
     public List<Book> getAllBooks() {
-        List<Book> bookList = bookRepository.findAll();
-        return bookList;
+        return bookRepository.findAll();
     }
 
     @GetMapping("/books/{id}")
@@ -57,13 +56,6 @@ public class BookController {
     @DeleteMapping("/book/delete/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void removeBook(@PathVariable Long id) {
-        Book book = bookRepository.findById(id).orElse(null);
-
-        if (book != null) {
-            bookRepository.delete(book);
-        }
+        bookRepository.findById(id).ifPresent(book -> bookRepository.delete(book));
     }
-
-
-
 }
